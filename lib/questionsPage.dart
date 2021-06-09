@@ -4,6 +4,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_quiz/question.dart';
+import 'package:flutter_quiz/resultArguments.dart';
+import 'package:flutter_quiz/resultsPage.dart';
 
 class QuestionsPage extends StatefulWidget {
   const QuestionsPage({Key? key}) : super(key: key);
@@ -47,9 +49,21 @@ class _QuestionsPageState extends State<QuestionsPage> {
             if (index == question.correctAnswerIndex) {
               _rightAnswersCount++;
             }
-            setState(() {
-              _currentQuestionIndex++;
-            });
+            if (_currentQuestionIndex + 1 < _totalQuestions) {
+              setState(() {
+                _currentQuestionIndex++;
+              });
+            } else if (_currentQuestionIndex + 1 == _totalQuestions) {
+              final percents = _rightAnswersCount / _totalQuestions * 100;
+              Navigator.popAndPushNamed(
+                context,
+                ResultsPage.routeName,
+                arguments: ResultArguments(
+                  _totalQuestions,
+                  _rightAnswersCount,
+                   percents.round(),
+              ));
+            }
           },
         child: Text(question.answers[index].text),
     );

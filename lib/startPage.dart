@@ -4,6 +4,8 @@ import 'package:flutter_quiz/questionsPage.dart';
 class StartPage extends StatelessWidget {
   const StartPage({Key? key, required this.title}) : super(key: key);
 
+  static const routeName = '/';
+
   final String title;
 
   @override

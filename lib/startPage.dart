@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_quiz/questionsPage.dart';
 
 class StartPage extends StatelessWidget {
   const StartPage({Key? key, required this.title}) : super(key: key);
@@ -14,7 +15,7 @@ class StartPage extends StatelessWidget {
       body: Center(
         child: TextButton(
           onPressed: () {
-            Navigator.pushNamed(context, '/questions');
+            Navigator.pushNamed(context, QuestionsPage.routeName);
           },
           child: const Text('Start'),
         ),

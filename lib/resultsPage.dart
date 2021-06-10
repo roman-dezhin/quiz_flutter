@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_quiz/Strings.dart';
 import 'package:flutter_quiz/resultArguments.dart';
 import 'package:flutter_quiz/startPage.dart';
 
@@ -12,19 +13,19 @@ class ResultsPage extends StatelessWidget {
     final args = ModalRoute.of(context)!.settings.arguments as ResultArguments;
     return Scaffold(
         appBar: AppBar(
-          title: Text('Questions'),
+          title: Text(Strings.resultsPageTitle),
         ),
         body: Center(
           child: Column(
               children: [
-                Text('Total questions: ${args.totalQuestions}'),
-                Text('Right answers: ${args.rightAnswers}'),
-                Text('Percent: ${args.percents}'),
+                Text(Strings.totalQuestions + args.totalQuestions.toString()),
+                Text(Strings.rightAnswers + args.rightAnswers.toString()),
+                Text(Strings.percents + args.percents.toString()),
                 ElevatedButton(
                     onPressed: () {
                       Navigator.popAndPushNamed(context, StartPage.routeName);
                     },
-                    child: Text('Try again')),
+                    child: Text(Strings.tryAgainButtonTitle)),
               ],
             ),
         ),

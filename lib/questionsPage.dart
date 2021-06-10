@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_quiz/Strings.dart';
 import 'package:flutter_quiz/question.dart';
 import 'package:flutter_quiz/resultArguments.dart';
 import 'package:flutter_quiz/resultsPage.dart';
@@ -30,7 +31,7 @@ class _QuestionsPageState extends State<QuestionsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Questions'),
+        title: Text(Strings.questionsPageTitle),
       ),
       body: _questions.isNotEmpty
           ? Column(
@@ -72,7 +73,7 @@ class _QuestionsPageState extends State<QuestionsPage> {
                 ));
           }
         },
-        child: Text('Next'));
+        child: Text(Strings.nextButtonTitle));
   }
 
   Widget answerButton(int index) {

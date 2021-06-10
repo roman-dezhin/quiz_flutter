@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_quiz/Strings.dart';
 import 'package:flutter_quiz/questionsPage.dart';
 
 class StartPage extends StatelessWidget {
@@ -19,7 +20,7 @@ class StartPage extends StatelessWidget {
           onPressed: () {
             Navigator.pushNamed(context, QuestionsPage.routeName);
           },
-          child: const Text('Start'),
+          child: const Text(Strings.startButtonTitle),
         ),
       ),
     );

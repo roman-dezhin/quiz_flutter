@@ -33,18 +33,25 @@ class _QuestionsPageState extends State<QuestionsPage> {
       appBar: AppBar(
         title: Text(Strings.questionsPageTitle),
       ),
-      body: _questions.isNotEmpty
+      body: Padding(
+        padding: EdgeInsets.all(15.0),
+        child: _questions.isNotEmpty
           ? Column(
             children: [
-              Text(_questions[_currentQuestionIndex].questionText),
+              Text(
+                _questions[_currentQuestionIndex].questionText,
+                style: TextStyle(fontSize: 20),
+              ),
               Divider(),
               answerButton(0),
               answerButton(1),
               answerButton(2),
               answerButton(3),
+              if (_isAnswered) Divider(),
               if (_isAnswered) nextButton(),
             ])
           : Container(),
+      ),
     );
   }
 
@@ -73,6 +80,9 @@ class _QuestionsPageState extends State<QuestionsPage> {
                 ));
           }
         },
+        style: ElevatedButton.styleFrom(
+          textStyle: const TextStyle(fontSize: 20),
+        ),
         child: Text(Strings.nextButtonTitle));
   }
 
@@ -102,6 +112,11 @@ class _QuestionsPageState extends State<QuestionsPage> {
               return _getAnswerButtonColor(index);
             return _defaultColor; // Use the component's default.
           },
+        ),
+        textStyle: MaterialStateProperty.resolveWith<TextStyle>(
+          (Set<MaterialState> states) {
+            return TextStyle(fontSize: 20);
+          }
         ),
       ),
       child: Text(question.answers[index].text),

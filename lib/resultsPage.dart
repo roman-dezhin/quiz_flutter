@@ -16,18 +16,26 @@ class ResultsPage extends StatelessWidget {
           title: Text(Strings.resultsPageTitle),
         ),
         body: Center(
-          child: Column(
+          child: Padding(
+            padding: EdgeInsets.all(15.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text(Strings.totalQuestions + args.totalQuestions.toString()),
-                Text(Strings.rightAnswers + args.rightAnswers.toString()),
-                Text(Strings.percents + args.percents.toString()),
+                Text(Strings.totalQuestions + args.totalQuestions.toString(), style: TextStyle(fontSize: 20),),
+                Text(Strings.rightAnswers + args.rightAnswers.toString(), style: TextStyle(fontSize: 20),),
+                Text(Strings.percents + args.percents.toString(), style: TextStyle(fontSize: 20),),
                 ElevatedButton(
                     onPressed: () {
                       Navigator.popAndPushNamed(context, StartPage.routeName);
                     },
+                    style: ElevatedButton.styleFrom(
+                      textStyle: const TextStyle(fontSize: 20),
+                    ),
                     child: Text(Strings.tryAgainButtonTitle)),
               ],
             ),
+          ),
         ),
     );
   }

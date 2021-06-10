@@ -20,6 +20,9 @@ class StartPage extends StatelessWidget {
           onPressed: () {
             Navigator.pushNamed(context, QuestionsPage.routeName);
           },
+          style: ElevatedButton.styleFrom(
+            textStyle: const TextStyle(fontSize: 30),
+          ),
           child: const Text(Strings.startButtonTitle),
         ),
       ),

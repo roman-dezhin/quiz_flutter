@@ -27,7 +27,7 @@ class ResultsPage extends StatelessWidget {
                 Text(Strings.percents + args.percents.toString(), style: TextStyle(fontSize: 20),),
                 ElevatedButton(
                     onPressed: () {
-                      Navigator.popAndPushNamed(context, StartPage.routeName);
+                      Navigator.popUntil(context, ModalRoute.withName(StartPage.routeName));
                     },
                     style: ElevatedButton.styleFrom(
                       textStyle: const TextStyle(fontSize: 20),

@@ -21,6 +21,10 @@ class _QuestionsPageState extends State<QuestionsPage> {
   int _currentQuestionIndex = 0;
   int _totalQuestions = 0;
   int _rightAnswersCount = 0;
+  bool _isAnswerButtonEnabled = true;
+  final _defaultColor = Colors.blue;
+  bool _isAnswered = false;
+  int _answerIndex = -1;
 
   @override
   Widget build(BuildContext context) {
@@ -37,36 +41,83 @@ class _QuestionsPageState extends State<QuestionsPage> {
               answerButton(1),
               answerButton(2),
               answerButton(3),
+              if (_isAnswered) nextButton(),
             ])
           : Container(),
     );
   }
 
-  Widget answerButton(int index) {
-    QuestionModel question = _questions[_currentQuestionIndex];
+  Widget nextButton() {
     return ElevatedButton(
         onPressed: () {
-            if (index == question.correctAnswerIndex) {
-              _rightAnswersCount++;
-            }
-            if (_currentQuestionIndex + 1 < _totalQuestions) {
-              setState(() {
-                _currentQuestionIndex++;
-              });
-            } else if (_currentQuestionIndex + 1 == _totalQuestions) {
-              final percents = _rightAnswersCount / _totalQuestions * 100;
-              Navigator.popAndPushNamed(
+          // check if exists the next question
+          if (_currentQuestionIndex + 1 < _totalQuestions) {
+            setState(() {
+              _isAnswered = false;
+              _answerIndex = -1;
+              _isAnswerButtonEnabled = true;
+              _currentQuestionIndex++;
+            });
+          } else
+            // if it's the last question, go to the result page
+            if (_currentQuestionIndex + 1 == _totalQuestions) {
+            final percents = _rightAnswersCount / _totalQuestions * 100;
+            Navigator.popAndPushNamed(
                 context,
                 ResultsPage.routeName,
                 arguments: ResultArguments(
                   _totalQuestions,
                   _rightAnswersCount,
-                   percents.round(),
-              ));
-            }
+                  percents.round(),
+                ));
+          }
+        },
+        child: Text('Next'));
+  }
+
+  Widget answerButton(int index) {
+    QuestionModel question = _questions[_currentQuestionIndex];
+    return ElevatedButton(
+      onPressed: _isAnswerButtonEnabled
+          ? () {
+              setState(() {
+              _isAnswerButtonEnabled = false;
+              _answerIndex = index;
+              _isAnswered = true;
+              if (index == question.correctAnswerIndex) {
+                _rightAnswersCount++;
+              }
+            });
+          }
+        : null,
+      style: ButtonStyle(
+        backgroundColor: MaterialStateProperty.resolveWith<Color>(
+              (Set<MaterialState> states) {
+            if (states.contains(MaterialState.pressed))
+              return Theme.of(context)
+                  .colorScheme
+                  .primary;
+            else if (states.contains(MaterialState.disabled))
+              return _getAnswerButtonColor(index);
+            return _defaultColor; // Use the component's default.
           },
-        child: Text(question.answers[index].text),
+        ),
+      ),
+      child: Text(question.answers[index].text),
     );
+  }
+
+  Color _getAnswerButtonColor(int buttonIndex) {
+    Color color = _defaultColor;
+    // if we didn't press this button
+    if (buttonIndex != _answerIndex) return color;
+    // if we pressed this button
+    if (buttonIndex == _questions[_currentQuestionIndex].correctAnswerIndex) {
+      color = Colors.green;
+    } else {
+      color = Colors.red;
+    }
+    return color;
   }
 
   @override

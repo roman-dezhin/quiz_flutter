@@ -15,7 +15,7 @@ class StartPage extends StatelessWidget {
         title: Text(title),
       ),
       body: Center(
-        child: TextButton(
+        child: ElevatedButton(
           onPressed: () {
             Navigator.pushNamed(context, QuestionsPage.routeName);
           },
